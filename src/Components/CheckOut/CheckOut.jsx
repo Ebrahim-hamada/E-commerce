@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 function CheckOut() {
   const { checkOut, cashPayment, isLoading, ClearAllProduct } =
     useContext(CartContext);
-  const [isCashLoading, setIsCashLoading] = useState(false);
   const navigate = useNavigate();
 
   Scroll();
@@ -36,7 +35,6 @@ function CheckOut() {
         city: values.city,
         phone: values.phone,
       };
-      setIsCashLoading(true);
       try {
         const response = await cashPayment(shippingAddress);
 
@@ -49,7 +47,6 @@ function CheckOut() {
       } catch (error) {
         toast.error(error.response?.data?.message || "Cash payment failed");
       } finally {
-        setIsCashLoading(false);
       }
     },
   });
@@ -121,9 +118,8 @@ function CheckOut() {
           <button
               type="submit"
               className="bg-emerald-500 hover:bg-emerald-300 w-full cursor-pointer p-2 rounded-md text-white"
-              disabled={isCashLoading}
             >
-              {isCashLoading ? (
+              {isLoading ? (
                 <i className="fa fa-spinner fa-spin"></i>
               ) : (
                 <div>
@@ -136,7 +132,12 @@ function CheckOut() {
               type="button"
               className="bg-emerald-500 hover:bg-emerald-300 w-full cursor-pointer p-2 rounded-md text-white"
               onClick={() => {
-                checkOut()}}
+                checkOut({
+                  street: formik.values.street,
+                  city: formik.values.city,
+                  phone: formik.values.phone,
+                });
+              }}
             >
               {isLoading ? (
                 <i className="fa fa-spinner fa-spin"></i>
