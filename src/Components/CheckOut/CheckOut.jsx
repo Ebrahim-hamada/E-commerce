@@ -130,10 +130,12 @@ function CheckOut() {
             <button
               type="button"
               className="bg-emerald-500 hover:bg-emerald-300 w-full cursor-pointer p-2 rounded-md text-white"
-              onClick={() => {
-                formik.handleSubmit(); 
-                if (!formik.isValid || Object.keys(formik.errors).length > 0) {
-                  return; 
+              onClick={async () => {
+                const isFormValid = await formik.validateForm();
+                formik.setTouched({ street: true, city: true, phone: true });
+
+                if (Object.keys(isFormValid).length > 0) {
+                  return;
                 }
 
                 checkOut({
