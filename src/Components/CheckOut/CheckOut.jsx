@@ -53,7 +53,6 @@ function CheckOut() {
 
   return (
     <div className="w-full flex flex-row-reverse items-center md:flex-row">
-     
       <div className="w-[40%] hidden md:block justify-center mt-20">
         <img src={creditCardImg} alt="Checkout" className="w-[60%] ms-auto" />
       </div>
@@ -115,7 +114,7 @@ function CheckOut() {
           </div>
 
           <div className="flex flex-col md:flex-row justify-between gap-4 mt-5">
-          <button
+            <button
               type="submit"
               className="bg-emerald-500 hover:bg-emerald-300 w-full cursor-pointer p-2 rounded-md text-white"
             >
@@ -132,6 +131,11 @@ function CheckOut() {
               type="button"
               className="bg-emerald-500 hover:bg-emerald-300 w-full cursor-pointer p-2 rounded-md text-white"
               onClick={() => {
+                formik.handleSubmit(); 
+                if (!formik.isValid || Object.keys(formik.errors).length > 0) {
+                  return; 
+                }
+
                 checkOut({
                   street: formik.values.street,
                   city: formik.values.city,
