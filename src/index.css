@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+::-webkit-scrollbar {
+    display: none;
+}
+.active{
+    border-bottom:solid #10b981 2px ;
+    padding-bottom: 3px;
+}
+
+body {
+    background-image: url(assets/light-patten.svg);
+  }
